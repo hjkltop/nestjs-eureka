@@ -13,10 +13,13 @@ describe('EurekaService', () => {
     mockedClient = new Eureka(null);
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [DiscoveryService, {
-        provide: Eureka,
-        useValue: mockedClient,
-      }],
+      providers: [
+        DiscoveryService,
+        {
+          provide: Eureka,
+          useValue: mockedClient,
+        },
+      ],
     }).compile();
 
     const app = module.createNestApplication();
@@ -24,8 +27,9 @@ describe('EurekaService', () => {
   });
 
   it('should get an app instance from eureka', async () => {
-    jest.spyOn(mockedClient, 'getInstancesByAppId')
-        .mockReturnValue([mockEurekaInstanceConfig('DOWN'), mockEurekaInstanceConfig('UP')]);
+    jest
+      .spyOn(mockedClient, 'getInstancesByAppId')
+      .mockReturnValue([mockEurekaInstanceConfig('DOWN'), mockEurekaInstanceConfig('UP')]);
 
     const serviceDto = service.resolveHostname('app-service');
 
@@ -41,7 +45,6 @@ describe('EurekaService', () => {
 
     expect(serviceDto).toBeNull();
   });
-
 });
 
 function mockEurekaInstanceConfig(status: EurekaClient.InstanceStatus): EurekaClient.EurekaInstanceConfig {
@@ -51,9 +54,12 @@ function mockEurekaInstanceConfig(status: EurekaClient.InstanceStatus): EurekaCl
     ipAddr: 'ipAddr2',
     vipAddress: 'vipAddress2',
     dataCenterInfo: {
-      name: 'MyOwn',
+      // prettier-ignore
+      'name': 'MyOwn',
+      '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
     },
     port: {
+      // prettier-ignore
       '$': 8080,
       '@enabled': true,
     },

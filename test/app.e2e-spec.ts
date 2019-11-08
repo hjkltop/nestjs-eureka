@@ -17,24 +17,28 @@ describe('AppController (e2e)', () => {
     mockedService = new TestService();
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [EurekaModule.forRoot({
-        eureka: {
-          host: process.env.GITLAB_CI ? 'eureka-service' : '127.0.0.1',
-          port: process.env.GITLAB_CI ? 8080 : 8761,
-          registryFetchInterval: 1000,
-          servicePath: '/eureka/apps/',
-          maxRetries: 3,
-        },
-        service: {
-          name: 'test-service',
-          port: 8080,
-        },
-      })],
+      imports: [
+        EurekaModule.forRoot({
+          eureka: {
+            host: process.env.GITLAB_CI ? 'eureka-service' : '127.0.0.1',
+            port: process.env.GITLAB_CI ? 8080 : 8761,
+            registryFetchInterval: 1000,
+            servicePath: '/eureka/apps/',
+            maxRetries: 3,
+          },
+          service: {
+            name: 'test-service',
+            port: 8080,
+          },
+        }),
+      ],
       controllers: [TestController],
-      providers: [{
-        provide: TestService,
-        useValue: mockedService,
-      }],
+      providers: [
+        {
+          provide: TestService,
+          useValue: mockedService,
+        },
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();

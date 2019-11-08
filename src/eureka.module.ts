@@ -34,7 +34,9 @@ export class EurekaModule {
     };
   }
 
-  private static createAsyncProvider(options: EurekaModuleAsyncOptions): Provider<EurekaModuleOptions | Promise<EurekaModuleOptions>> {
+  private static createAsyncProvider(
+    options: EurekaModuleAsyncOptions,
+  ): Provider<EurekaModuleOptions | Promise<EurekaModuleOptions>> {
     if (options.useFactory) {
       return {
         provide: EUREKA_MODULE_OPTIONS,
@@ -45,13 +47,10 @@ export class EurekaModule {
 
     if (options.useClass || options.useExisting) {
       // Bug with TypeScript 3.5.2: https://github.com/microsoft/TypeScript/issues/31937
-      const inject = [
-        (options.useClass || options.useExisting) as Type<EurekaModuleOptionsFactory>,
-      ];
+      const inject = [(options.useClass || options.useExisting) as Type<EurekaModuleOptionsFactory>];
       return {
         provide: EUREKA_MODULE_OPTIONS,
-        useFactory: async (optionsFactory: EurekaModuleOptionsFactory) =>
-          (await optionsFactory.createEurekaOptions()),
+        useFactory: async (optionsFactory: EurekaModuleOptionsFactory) => await optionsFactory.createEurekaOptions(),
         inject,
       };
     }

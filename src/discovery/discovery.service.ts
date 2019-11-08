@@ -17,7 +17,7 @@ export class DiscoveryService {
         this.logger.debug(`Found an instance of ${serviceName} in eureka`);
         const host = instance.hostName;
         const port = this.getPort(instance);
-        return {host, port};
+        return { host, port };
       }
       this.logger.debug(`no instance of ${serviceName} found in eureka`);
     }

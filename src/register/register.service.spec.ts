@@ -13,18 +13,21 @@ describe('EurekaService', () => {
 
   beforeEach(async () => {
     mockedClient = new Eureka(null);
-    jest.spyOn(mockedClient, 'start').mockImplementation((cb) => {
+    jest.spyOn(mockedClient, 'start').mockImplementation(cb => {
       cb(null);
     });
-    jest.spyOn(mockedClient, 'stop').mockImplementation((cb) => {
+    jest.spyOn(mockedClient, 'stop').mockImplementation(cb => {
       cb(null);
     });
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [RegisterService, {
-        provide: Eureka,
-        useValue: mockedClient,
-      }],
+      providers: [
+        RegisterService,
+        {
+          provide: Eureka,
+          useValue: mockedClient,
+        },
+      ],
     }).compile();
 
     app = module.createNestApplication();

@@ -4,11 +4,9 @@ import { DiscoveryService } from './discovery.service';
 
 @Injectable()
 export class DiscoveryInterceptor implements OnApplicationBootstrap {
-
   protected logger: Logger = new Logger(DiscoveryInterceptor.name);
 
-  constructor(protected readonly httpService: HttpService,
-              protected readonly discoveryService: DiscoveryService) {}
+  constructor(protected readonly httpService: HttpService, protected readonly discoveryService: DiscoveryService) {}
 
   async onApplicationBootstrap() {
     this.logger.debug('Injecting interceptor');
