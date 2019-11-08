@@ -1,0 +1,27 @@
+stages:
+  - test
+  - compile
+  - build
+  - deploy
+
+test-e2e:
+  image: node:10
+  stage: test
+  services:
+    - name: registry.gitlab.com/wonderboisse/eureka/master:2a464f552a8cb605a8cea9b2bc73c107162ac675
+      alias: eureka-service
+  script:
+    - npm install
+    - npm run test:e2e
+
+#########################
+# test Build and deploy
+#########################
+include:
+  - project: 'wonderboisse/gitlab-ci-templates'
+    file: '.gitlab-ci-nestjs-test-compile-template.yml'
+  - project: 'wonderboisse/gitlab-ci-templates'
+    file: '.gitlab-ci-docker-template.yml'
+  - project: 'wonderboisse/gitlab-ci-templates'
+    file: '.gitlab-ci-deploy-template.yml'
+
