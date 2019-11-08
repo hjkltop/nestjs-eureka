@@ -1,9 +1,28 @@
 {
   "name": "nestjs-eureka",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "A NestJS module that integrate eureka-js-client",
+  "author": "F. Boisselier <florent.boisselier.fr@gmail.com",
   "license": "MIT",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/fboisselier52/nestjs-eureka.git"
+  },
+  "keywords": [
+    "nestjs",
+    "module",
+    "eureka",
+    "eureka-js-client"
+  ],
+  "files": [
+    "dist"
+  ],
+  "bugs": {
+    "url": "https://gitlab.com/fboisselier52/nestjs-eureka/issues"
+  },
+  "homepage": "https://gitlab.com/fboisselier52/nestjs-eureka#readme",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
