@@ -1,10 +1,23 @@
 stages:
   - test
-  - compile
   - build
   - deploy
 
-test-e2e:
+npm-lint:
+  image: node:10-alpine
+  stage: build
+  script:
+    - npm install
+    - npm run lint
+
+npm-test:
+  image: node:10
+  stage: test
+  script:
+    - npm install
+    - npm run test
+
+npm-test:e2e:
   image: node:10
   stage: test
   services:
@@ -14,14 +27,23 @@ test-e2e:
     - npm install
     - npm run test:e2e
 
-#########################
-# test Build and deploy
-#########################
-include:
-  - project: 'wonderboisse/gitlab-ci-templates'
-    file: '.gitlab-ci-nestjs-test-compile-template.yml'
-  - project: 'wonderboisse/gitlab-ci-templates'
-    file: '.gitlab-ci-docker-template.yml'
-  - project: 'wonderboisse/gitlab-ci-templates'
-    file: '.gitlab-ci-deploy-template.yml'
+npm-build:
+  image: node:10-alpine
+  stage: build
+  artifacts:
+    expire_in: 30 mins
+    paths:
+      - dist
+  script:
+    - npm install
+    - npm run build
 
+npm-publish:
+  image: node:10-alpine
+  stage: publish
+  only:
+    - tags
+  script:
+    - npm version --allow-same-version --no-git-tag-version ${CI_COMMIT_REF_NAME}
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}'>.npmrc
+    - npm publish
