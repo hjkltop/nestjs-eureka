@@ -1,24 +1,24 @@
 stages:
   - test
   - build
-  - deploy
+  - publish
 
 npm-lint:
   image: node:10-alpine
-  stage: build
+  stage: test
   script:
     - npm install
     - npm run lint
 
 npm-test:
-  image: node:10
+  image: node:10-alpine
   stage: test
   script:
     - npm install
     - npm run test
 
 npm-test:e2e:
-  image: node:10
+  image: node:10-alpine
   stage: test
   services:
     - name: registry.gitlab.com/wonderboisse/eureka/master:2a464f552a8cb605a8cea9b2bc73c107162ac675
