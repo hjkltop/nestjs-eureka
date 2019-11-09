@@ -23,5 +23,6 @@ export interface EurekaModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'
   /**
    * The providers which should get injected
    */
+  // tslint:disable-next-line
   inject?: (string | symbol | Function | Type<any> | Abstract<any>)[];
 }
