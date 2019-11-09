@@ -2,15 +2,14 @@ import { Module, DynamicModule, HttpModule, Provider, Type } from '@nestjs/commo
 import { eurekaClientProvider, EUREKA_MODULE_OPTIONS } from './client/client.provider';
 import { RegisterService } from './register/register.service';
 import { EurekaModuleOptions } from './interfaces/eureka.module.options';
-import { DiscoveryService } from './discovery/discovery.service';
 import { EurekaModuleAsyncOptions } from './interfaces/eureka.module.async.options';
 import { EurekaModuleOptionsFactory } from './interfaces/eureka.module.options.factory';
-import { DiscoveryInterceptor } from './discovery/discovery.interceptor';
+import { discoveryProviders } from './discovery/discovery.provider';
 
 @Module({
   imports: [HttpModule],
-  providers: [eurekaClientProvider, RegisterService, DiscoveryService, DiscoveryInterceptor],
-  exports: [RegisterService, HttpModule],
+  providers: [eurekaClientProvider, RegisterService, ...discoveryProviders],
+  exports: [HttpModule],
 })
 export class EurekaModule {
   static forRoot(options: EurekaModuleOptions): DynamicModule {

@@ -5,7 +5,7 @@ import { DiscoveryService } from './discovery.service';
 // Mock Eureka js client
 jest.mock('eureka-js-client');
 
-describe('EurekaService', () => {
+describe('DiscoveryService', () => {
   let service: DiscoveryService;
   let mockedClient: Eureka;
 

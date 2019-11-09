@@ -4,4 +4,5 @@ import { ServiceDefinition } from './service.definition';
 export interface EurekaModuleOptions {
   eureka: EurekaClient.EurekaClientConfig;
   service: ServiceDefinition;
+  disableDiscovery?: boolean;
 }
