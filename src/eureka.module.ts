@@ -5,6 +5,7 @@ import { EurekaModuleAsyncOptions } from './interfaces/eureka.module.async.optio
 import { EurekaModuleOptionsFactory } from './interfaces/eureka.module.options.factory';
 import { discoveryProviders } from './discovery/discovery.provider';
 import { registerProvider } from './register/register.provider';
+import { DiscoveryService } from './discovery/discovery.service';
 
 const DEFAULT_OPTIONS: EurekaModuleOptions = { disable: true };
 const DEFAULT_ASYNC_OPTIONS: EurekaModuleAsyncOptions = { useFactory: () => DEFAULT_OPTIONS };
@@ -12,7 +13,7 @@ const DEFAULT_ASYNC_OPTIONS: EurekaModuleAsyncOptions = { useFactory: () => DEFA
 @Module({
   imports: [HttpModule],
   providers: [eurekaClientProvider, ...discoveryProviders, registerProvider],
-  exports: [HttpModule],
+  exports: [HttpModule, DiscoveryService],
 })
 export class EurekaModule {
   static forRoot(options: EurekaModuleOptions): DynamicModule {
