@@ -5,7 +5,7 @@ import { Eureka } from 'eureka-js-client';
 export class RegisterService implements OnApplicationBootstrap, OnApplicationShutdown {
   protected logger: Logger = new Logger(RegisterService.name);
 
-  constructor(@Optional() protected client: Eureka) {}
+  constructor(protected client: Eureka) {}
 
   async onApplicationBootstrap() {
     if (this.client) {

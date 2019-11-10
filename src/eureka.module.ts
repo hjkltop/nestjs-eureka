@@ -1,35 +1,38 @@
 import { Module, DynamicModule, HttpModule, Provider, Type } from '@nestjs/common';
 import { eurekaClientProvider, EUREKA_MODULE_OPTIONS } from './client/client.provider';
-import { RegisterService } from './register/register.service';
 import { EurekaModuleOptions } from './interfaces/eureka.module.options';
 import { EurekaModuleAsyncOptions } from './interfaces/eureka.module.async.options';
 import { EurekaModuleOptionsFactory } from './interfaces/eureka.module.options.factory';
 import { discoveryProviders } from './discovery/discovery.provider';
+import { registerProvider } from './register/register.provider';
+
+const DEFAULT_OPTIONS: EurekaModuleOptions = { disable: true };
+const DEFAULT_ASYNC_OPTIONS: EurekaModuleAsyncOptions = { useFactory: () => DEFAULT_OPTIONS };
 
 @Module({
   imports: [HttpModule],
-  providers: [eurekaClientProvider, RegisterService, ...discoveryProviders],
+  providers: [eurekaClientProvider, ...discoveryProviders, registerProvider],
   exports: [HttpModule],
 })
 export class EurekaModule {
   static forRoot(options: EurekaModuleOptions): DynamicModule {
     return {
       module: EurekaModule,
-      providers: [EurekaModule.createProvider(options)],
+      providers: [EurekaModule.createProvider(options || DEFAULT_OPTIONS)],
     };
   }
 
   static forRootAsync(asyncOptions: EurekaModuleAsyncOptions): DynamicModule {
     return {
       module: EurekaModule,
-      providers: [EurekaModule.createAsyncProvider(asyncOptions)],
+      providers: [EurekaModule.createAsyncProvider(asyncOptions || DEFAULT_ASYNC_OPTIONS)],
     };
   }
 
-  private static createProvider(config: EurekaModuleOptions): Provider<EurekaModuleOptions> {
+  private static createProvider(options: EurekaModuleOptions): Provider<EurekaModuleOptions> {
     return {
       provide: EUREKA_MODULE_OPTIONS,
-      useValue: config,
+      useValue: options,
     };
   }
 

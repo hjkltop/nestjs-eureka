@@ -8,7 +8,7 @@ import * as _ from 'lodash';
 export class DiscoveryService {
   protected logger: Logger = new Logger(DiscoveryService.name);
 
-  constructor(@Optional() protected readonly client: Eureka) {}
+  constructor(protected readonly client: Eureka) {}
 
   resolveHostname(serviceName: string): ServiceDto {
     if (this.client) {

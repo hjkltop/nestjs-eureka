@@ -11,11 +11,13 @@ export const EUREKA_MODULE_OPTIONS = 'EUREKA_MODULE_OPTIONS';
 export const eurekaClientProvider: Provider = {
   provide: Eureka,
   useFactory: (options: EurekaModuleOptions): Eureka => {
-    if (options) {
-      return getEurekaProvider(options);
-    } else {
-      return null;
+    if (!options || options.disable) {
+      return undefined;
     }
+    if (!options.eureka || !options.service) {
+      throw new Error('EurekaModuleOptions has no eureka and service options');
+    }
+    return getEurekaProvider(options);
   },
   inject: [EUREKA_MODULE_OPTIONS],
 };

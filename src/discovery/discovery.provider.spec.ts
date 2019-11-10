@@ -62,4 +62,29 @@ describe('DiscoveryProvider', () => {
     expect(app.get(DiscoveryService)).toBeDefined();
     expect(app.get(DiscoveryInterceptor)).toBeDefined();
   });
+
+  it('should not provide discovery services - global', async () => {
+    options.disable = true;
+
+    const app = (await module.compile()).createNestApplication();
+
+    expect(app.get(DiscoveryService)).toBeUndefined();
+    expect(app.get(DiscoveryInterceptor)).toBeUndefined();
+  });
+
+  it('should provide discovery services - global', async () => {
+    const app = (await module.compile()).createNestApplication();
+
+    expect(app.get(DiscoveryService)).toBeDefined();
+    expect(app.get(DiscoveryInterceptor)).toBeDefined();
+  });
+
+  it('should provide discovery services - global - 2', async () => {
+    options.disable = false;
+
+    const app = (await module.compile()).createNestApplication();
+
+    expect(app.get(DiscoveryService)).toBeDefined();
+    expect(app.get(DiscoveryInterceptor)).toBeDefined();
+  });
 });

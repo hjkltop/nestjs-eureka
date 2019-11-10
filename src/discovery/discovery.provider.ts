@@ -8,7 +8,10 @@ import { EurekaModuleOptions } from '../interfaces/eureka.module.options';
 const discoveryServiceProvider: Provider<DiscoveryService> = {
   provide: DiscoveryService,
   useFactory: (client: Eureka, options: EurekaModuleOptions) => {
-    return options.disableDiscovery ? undefined : new DiscoveryService(client);
+    if (!options || !client || options.disable || options.disableDiscovery) {
+      return undefined;
+    }
+    return new DiscoveryService(client);
   },
   inject: [Eureka, EUREKA_MODULE_OPTIONS],
 };
@@ -16,7 +19,10 @@ const discoveryServiceProvider: Provider<DiscoveryService> = {
 const discoveryInterceptorProvider: Provider<DiscoveryInterceptor> = {
   provide: DiscoveryInterceptor,
   useFactory: (httpService: HttpService, discoveryService: DiscoveryService, options: EurekaModuleOptions) => {
-    return options.disableDiscovery ? undefined : new DiscoveryInterceptor(httpService, discoveryService);
+    if (!options || !httpService || options.disable || options.disableDiscovery) {
+      return undefined;
+    }
+    return new DiscoveryInterceptor(httpService, discoveryService);
   },
   inject: [HttpService, DiscoveryService, EUREKA_MODULE_OPTIONS],
 };
