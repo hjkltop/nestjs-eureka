@@ -1,4 +1,4 @@
-import { Injectable, Logger, Optional } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { isNumber } from 'util';
 import { EurekaClient, Eureka } from 'eureka-js-client';
 import { ServiceDto } from '../interfaces/service';

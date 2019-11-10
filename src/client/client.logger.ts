@@ -5,15 +5,19 @@ export class ClientLogger {
   protected logger = new Logger(Eureka.name);
 
   warn(...args: any[]): void {
-    this.logger.warn.apply(this.logger, args);
+    this.callLogger('warn', args);
   }
   info(...args: any[]): void {
-    this.logger.log.apply(this.logger, args);
+    this.callLogger('log', args);
   }
   debug(...args: any[]): void {
-    this.logger.debug.apply(this.logger, args);
+    this.callLogger('debug', args);
   }
   error(...args: any[]): void {
-    this.logger.error.apply(this.logger, args);
+    this.callLogger('error', args);
+  }
+
+  private callLogger(level: 'warn' | 'log' | 'debug' | 'error', args: any[]) {
+    this.logger[level](args.join(' '));
   }
 }
