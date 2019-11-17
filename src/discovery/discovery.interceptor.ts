@@ -1,16 +1,23 @@
-import { OnApplicationBootstrap, HttpService, Logger, Injectable } from '@nestjs/common';
+import { OnApplicationBootstrap, HttpService, Logger, Injectable, OnApplicationShutdown } from '@nestjs/common';
 import { AxiosRequestConfig } from 'axios';
 import { DiscoveryService } from './discovery.service';
 
 @Injectable()
-export class DiscoveryInterceptor implements OnApplicationBootstrap {
+export class DiscoveryInterceptor implements OnApplicationBootstrap, OnApplicationShutdown {
   protected logger: Logger = new Logger(DiscoveryInterceptor.name);
+
+  private interceptorNumber: number;
 
   constructor(protected readonly httpService: HttpService, protected readonly discoveryService: DiscoveryService) {}
 
-  async onApplicationBootstrap() {
+  onApplicationBootstrap() {
     this.logger.debug('Injecting interceptor');
-    this.httpService.axiosRef.interceptors.request.use(this.mapHostnameInterceptor.bind(this));
+    this.interceptorNumber = this.httpService.axiosRef.interceptors.request.use(this.mapHostnameInterceptor.bind(this));
+  }
+
+  onApplicationShutdown() {
+    this.logger.debug('Eject interceptor');
+    this.httpService.axiosRef.interceptors.request.eject(this.interceptorNumber);
   }
 
   private mapHostnameInterceptor(config: AxiosRequestConfig): AxiosRequestConfig {
