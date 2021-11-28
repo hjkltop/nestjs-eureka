@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EurekaModule } from '../src/eureka.module';
+import { EurekaModule } from '../src';
 import { TestController } from './test.controller';
 import { INestApplication } from '@nestjs/common';
 import { TestService } from './test.service';
@@ -49,7 +49,7 @@ describe('AppController (e2e)', () => {
     httpService = app.get(HttpService);
 
     // Wait eureka registry fetch.
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 5000));
   });
 
   it('should resolve dns with eureka', async () => {
