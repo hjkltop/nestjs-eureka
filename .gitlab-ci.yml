@@ -4,21 +4,21 @@ stages:
   - publish
 
 npm-lint:
-  image: node:10-alpine
+  image: node:16-alpine
   stage: test
   script:
     - npm install
     - npm run lint
 
 npm-test:
-  image: node:10-alpine
+  image: node:16-alpine
   stage: test
   script:
     - npm install
     - npm run test
 
 npm-test:e2e:
-  image: node:10-alpine
+  image: node:16-alpine
   stage: test
   services:
     - name: registry.gitlab.com/wonderboisse/eureka/master:2a464f552a8cb605a8cea9b2bc73c107162ac675
@@ -28,7 +28,7 @@ npm-test:e2e:
     - npm run test:e2e
 
 npm-build:
-  image: node:10-alpine
+  image: node:16-alpine
   stage: build
   artifacts:
     expire_in: 30 mins
@@ -39,7 +39,7 @@ npm-build:
     - npm run build
 
 npm-publish:
-  image: node:10-alpine
+  image: node:16-alpine
   stage: publish
   only:
     - tags
