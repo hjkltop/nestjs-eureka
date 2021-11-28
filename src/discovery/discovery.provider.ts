@@ -1,9 +1,10 @@
-import { Provider, HttpService } from '@nestjs/common';
+import { Provider } from '@nestjs/common';
 import { DiscoveryService } from './discovery.service';
 import { DiscoveryInterceptor } from './discovery.interceptor';
 import { EUREKA_MODULE_OPTIONS } from '../client/client.provider';
 import { Eureka } from 'eureka-js-client';
 import { EurekaModuleOptions } from '../interfaces/eureka.module.options';
+import { HttpService } from '@nestjs/axios';
 
 const discoveryServiceProvider: Provider<DiscoveryService> = {
   provide: DiscoveryService,

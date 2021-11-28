@@ -6,7 +6,7 @@ import { EurekaModuleOptions } from '../interfaces/eureka.module.options';
 import { EurekaClient, Eureka } from 'eureka-js-client';
 import { ServiceDefinition } from '../interfaces/service.definition';
 import { EUREKA_MODULE_OPTIONS } from '../client/client.provider';
-import { HttpService } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 
 describe('DiscoveryProvider', () => {
   let module: TestingModuleBuilder;

@@ -1,4 +1,5 @@
-import { OnApplicationBootstrap, HttpService, Logger, Injectable, OnApplicationShutdown } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { OnApplicationBootstrap, Logger, Injectable, OnApplicationShutdown } from '@nestjs/common';
 import { AxiosRequestConfig } from 'axios';
 import { DiscoveryService } from './discovery.service';
 

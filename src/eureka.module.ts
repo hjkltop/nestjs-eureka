@@ -1,4 +1,5 @@
-import { Module, DynamicModule, HttpModule, Provider, Type } from '@nestjs/common';
+import { Module, DynamicModule, Provider, Type } from '@nestjs/common';
+import { HttpModule } from '@nestjs/axios';
 import { eurekaClientProvider, EUREKA_MODULE_OPTIONS } from './client/client.provider';
 import { EurekaModuleOptions } from './interfaces/eureka.module.options';
 import { EurekaModuleAsyncOptions } from './interfaces/eureka.module.async.options';

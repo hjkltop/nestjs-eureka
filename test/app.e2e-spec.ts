@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EurekaModule } from '../src/eureka.module';
 import { TestController } from './test.controller';
-import { HttpService, INestApplication } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 import { TestService } from './test.service';
-import { Eureka } from 'eureka-js-client';
+import { HttpService } from '@nestjs/axios';
 
 jest.mock('./test.service');
 jest.setTimeout(90000);
