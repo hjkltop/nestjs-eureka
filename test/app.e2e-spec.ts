@@ -22,7 +22,7 @@ describe('AppController (e2e)', () => {
         EurekaModule.forRoot({
           eureka: {
             host: process.env.GITLAB_CI ? 'eureka-service' : '127.0.0.1',
-            port: process.env.GITLAB_CI ? 8080 : 8761,
+            port: 8761,
             registryFetchInterval: 1000,
             servicePath: '/eureka/apps/',
             maxRetries: 3,
