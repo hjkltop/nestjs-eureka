@@ -4,6 +4,7 @@ import { TestController } from './test.controller';
 import { INestApplication } from '@nestjs/common';
 import { TestService } from './test.service';
 import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 jest.mock('./test.service');
 jest.setTimeout(90000);
@@ -52,7 +53,7 @@ describe('AppController (e2e)', () => {
   });
 
   it('should resolve dns with eureka', async () => {
-    await httpService.get('http://test-service/test').toPromise();
+    await firstValueFrom(httpService.get('http://test-service/test'));
     expect(mockedService.doSomething).toBeCalled();
   });
 
