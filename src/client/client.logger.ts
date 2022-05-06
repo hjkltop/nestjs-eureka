@@ -1,8 +1,12 @@
 import { Eureka } from 'eureka-js-client';
-import { Logger } from '@nestjs/common';
+import { Logger, LoggerService } from '@nestjs/common';
 
 export class ClientLogger {
-  protected logger = new Logger(Eureka.name);
+  protected logger: LoggerService;
+
+  constructor(logger?: LoggerService) {
+    this.logger = logger || new Logger(Eureka.name)
+  }
 
   warn(...args: any[]): void {
     this.callLogger('warn', args);

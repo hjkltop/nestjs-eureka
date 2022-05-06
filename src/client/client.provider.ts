@@ -47,6 +47,7 @@ function getEurekaProvider(options: EurekaModuleOptions): Eureka {
       metadata: {},
     },
     eureka: options.eureka,
-    logger: new ClientLogger(),
+    requestMiddleware: options.requestMiddleware,
+    logger: new ClientLogger(options.logger),
   });
 }
